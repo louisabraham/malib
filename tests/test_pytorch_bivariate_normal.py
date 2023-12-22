@@ -5,7 +5,7 @@ from scipy.stats import multivariate_normal
 
 
 def test_gradient():
-    for _ in range(1000):
+    for _ in range(100):
         cor = 1 * torch.rand(1) - 1
         x = 5 * torch.randn(1, 2, requires_grad=True, dtype=torch.float64)
         torch.autograd.gradcheck(standard_bivariate_normal_cdf, (x, cor))

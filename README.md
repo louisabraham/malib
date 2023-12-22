@@ -58,6 +58,18 @@ print(x.grad)
 # tensor([0.1995, 0.1995])
 ```
 
+## PyTorch interpolation
+
+```py
+import torch
+from malib import interp
+
+x = torch.tensor([0.0, 1.0, 2.0])
+y = torch.tensor([0.0, 1.0, 4.0])
+interp(torch.tensor([0.5, 1.5]), x, y)
+# tensor([0.5000, 2.5000])
+```
+
 ## Testing
 
 `pytest`

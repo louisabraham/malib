@@ -9,10 +9,11 @@ class StandardBivariateNormalCDF(torch.autograd.Function):
     @staticmethod
     def forward(ctx, x, cor):
         cor = float(cor)
-        ctx.save_for_backward(x, torch.tensor(cor))
+        ctx.save_for_backward(x, torch.tensor(cor, dtype=x.dtype))
         assert x.shape[-1] == 2
         return torch.tensor(
-            multivariate_normal.cdf(x, cov=[[1, cor], [cor, 1]], allow_singular=True)
+            multivariate_normal.cdf(x, cov=[[1, cor], [cor, 1]], allow_singular=True),
+            dtype=x.dtype,
         )
 
     @staticmethod
@@ -21,7 +22,7 @@ class StandardBivariateNormalCDF(torch.autograd.Function):
         return (
             torch.exp(-x * x / 2)
             / 2
-            / torch.sqrt(2 * torch.tensor(torch.pi))
+            / torch.sqrt(2 * torch.tensor(torch.pi, dtype=x.dtype))
             * (1 + torch.erf((y - cor * x) / torch.sqrt(2 * (1 - cor * cor))))
         )
 
