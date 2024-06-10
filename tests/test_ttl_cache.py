@@ -16,3 +16,9 @@ def test_ttl_cache():
     sleep(0.06)
     t2 = f()
     assert t0 != t2
+
+    @ttl_cache
+    def f():
+        return "result"
+
+    assert f() == "result"
