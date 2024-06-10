@@ -14,6 +14,24 @@ rl = RateLimiter(max_calls=10, period=60)
 rl.wait()
 ```
 
+## ttl_cache
+
+```py
+from malib import ttl_cache
+from time import sleep
+
+
+@ttl_cache(ttl=1)
+def f():
+    print("computing")
+    return "result"
+
+
+print(f()) # prints "computing"
+print(f()) # cached
+sleep(1)
+print(f()) # prints "computing"
+```
 
 ## Exact cover
 
