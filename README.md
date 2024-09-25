@@ -88,7 +88,31 @@ interp(torch.tensor([0.5, 1.5]), x, y)
 # tensor([0.5000, 2.5000])
 ```
 
+## Async to sync generator
+
+The `sync_gen` function allows you to convert an asynchronous generator into a synchronous one. This can be useful when you want to use async code in a synchronous context.
+
+```python
+import asyncio
+from malib import sync_gen
+
+async def async_generator():
+    for i in range(5):
+        await asyncio.sleep(0.1)
+        yield i
+
+# Convert async generator to sync generator
+sync_generator = sync_gen(async_generator())
+
+# Use the sync generator in a regular for loop
+for item in sync_generator:
+    print(item)
+```
+
 ## Testing
 
-`pytest`
+```
+poetry install --with dev
+pytest
+```
 
