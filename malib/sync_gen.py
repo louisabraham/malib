@@ -1,6 +1,10 @@
 import asyncio
 import collections
 
+import nest_asyncio
+
+nest_asyncio.apply()
+
 
 def sync_gen(gen):
     """

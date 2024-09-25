@@ -34,6 +34,15 @@ def test_sync_gen():
         list(sync_gen(42))
 
 
+async def test_sync_gen_async():
+    async def async_generator():
+        for i in range(3):
+            await asyncio.sleep(0.1)
+            yield i
+
+    assert list(sync_gen(async_generator())) == [0, 1, 2]
+
+
 def test_sync_gen_performance():
     async def slow_async_generator():
         for i in range(3):
