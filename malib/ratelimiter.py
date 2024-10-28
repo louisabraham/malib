@@ -10,12 +10,14 @@ class RateLimiter:
         self.period = period
         self.max_calls = max_calls
 
-    def wait(self) -> bool:
-        ans = False
+    def waiting_time(self) -> float:
         if len(self.calls) == self.max_calls:
-            wait = self.period + self.calls[0] - time.time()
-            if wait > 0:
-                time.sleep(wait)
-                ans = True
+            return max(0, self.period + self.calls[0] - time.time())
+        return 0
+
+    def wait_and_call(self) -> bool:
+        wait = self.waiting_time()
+        if wait > 0:
+            time.sleep(wait)
         self.calls.append(time.time())
-        return ans
+        return wait > 0
