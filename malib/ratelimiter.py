@@ -1,5 +1,5 @@
-import time
 import collections
+import time
 
 __all__ = ["RateLimiter"]
 
@@ -10,9 +10,12 @@ class RateLimiter:
         self.period = period
         self.max_calls = max_calls
 
-    def wait(self):
+    def wait(self) -> bool:
+        ans = False
         if len(self.calls) == self.max_calls:
             wait = self.period + self.calls[0] - time.time()
             if wait > 0:
                 time.sleep(wait)
+                ans = True
         self.calls.append(time.time())
+        return ans
