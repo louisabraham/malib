@@ -109,6 +109,16 @@ for item in sync_generator:
     print(item)
 ```
 
+
+## Confidence interval
+
+```py
+from malib import clopper_pearson_confidence_interval
+
+print(clopper_pearson_confidence_interval(100, 1000, alpha=0.05))
+# (0.08210533435557998, 0.12028793651869261)
+```
+
 ## Testing
 
 ```

@@ -1,7 +1,6 @@
-from malib import ttl_cache
+from time import sleep, time
 
-from malib import RateLimiter
-from time import time, sleep
+from malib import ttl_cache
 
 
 def test_ttl_cache():

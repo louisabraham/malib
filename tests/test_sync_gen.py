@@ -54,6 +54,5 @@ def test_sync_gen_performance():
     end_time = time()
 
     assert result == [0, 1, 2]
-    print(end_time - start_time)
     # Ensure it took at least 0.3 seconds but not much longer
     assert 0.3 < end_time - start_time < 0.31
