@@ -12,6 +12,10 @@ from malib import RateLimiter
 rl = RateLimiter(max_calls=10, period=60) 
 # call .wait_and_call() every time before calling the function
 rl.wait_and_call()
+# approximate probability that the rate limit is exceeded within 1 hour
+# when events are Poisson distributed with rate 3 per minute
+print(rl.prob_exceeded_poisson(mu=3 / 60, duration=3600))
+# 0.09958253462915534
 ```
 
 ## ttl_cache
