@@ -24,7 +24,7 @@ class RateLimiter:
         """
         Probability that the rate limit is exceeded within a given duration
         when events are Poisson distributed with rate mu.
-        Not accurate when duration / pe is small (less than 2).
+        Not accurate when duration / period is small (less than 2).
 
         Naus, J.I., 1982. Approximations for distributions of scan statistics.
         Journal of the American Statistical Association, 77(377), pp.177-183.
