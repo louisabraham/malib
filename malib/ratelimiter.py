@@ -7,8 +7,8 @@ __all__ = ["RateLimiter"]
 
 
 class RateLimiter:
-    def __init__(self, max_calls, period):
-        assert isinstance(max_calls, int) and max_calls > 0
+    def __init__(self, max_calls: int, period: float):
+        assert max_calls > 0
         self.calls = collections.deque(maxlen=max_calls)
         self.period = period
         self.max_calls = max_calls
