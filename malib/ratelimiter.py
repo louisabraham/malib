@@ -9,18 +9,18 @@ __all__ = ["RateLimiter"]
 class RateLimiter:
     def __init__(self, max_calls: int, period: float):
         assert max_calls > 0
-        self.calls = collections.deque(maxlen=max_calls)
+        self.calls: collections.deque[float] = collections.deque(maxlen=max_calls)
         self.period = period
         self.max_calls = max_calls
 
-    def wait_and_call(self):
+    def wait_and_call(self) -> None:
         if len(self.calls) == self.max_calls:
             wait = self.period + self.calls[0] - time.time()
             if wait > 0:
                 time.sleep(wait)
         self.calls.append(time.time())
 
-    def prob_exceeded_poisson(self, mu, duration):
+    def prob_exceeded_poisson(self, mu: float, duration: float) -> float:
         """
         Probability that the rate limit is exceeded within a given duration
         when events are Poisson distributed with rate mu.
