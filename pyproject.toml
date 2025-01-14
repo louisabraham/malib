@@ -9,6 +9,7 @@ repository = "https://github.com/louisabraham/malib"
 [tool.poetry.dependencies]
 python = "^3.8"
 nest-asyncio = "^1.6.0"
+joblib = "^1.4.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3"
