@@ -21,16 +21,10 @@ def sync_gen(gen):
     # Check if the argument is an asynchronous generator
     if hasattr(gen, "__anext__"):
         # Get or create an event loop
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-
         while True:
             try:
                 # Await the next item in the async generator and yield it synchronously
-                yield loop.run_until_complete(gen.__anext__())
+                yield asyncio.run(gen.__anext__())
             except StopAsyncIteration:
                 break
 
