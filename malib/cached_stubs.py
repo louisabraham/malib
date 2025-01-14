@@ -8,6 +8,7 @@ from unittest import mock
 import joblib
 import nest_asyncio
 import pytest
+from joblib.func_inspect import get_func_code
 
 nest_asyncio.apply()
 
@@ -32,6 +33,7 @@ def _patch_asyncgenfunction(func):
     def wrapper(*args, **kwargs):
         return asyncio.run(_collect_asyncgenerator(func(*args, **kwargs)))
 
+    wrapper.__wrapped_async_gen__ = func
     return wrapper
 
 
@@ -53,6 +55,15 @@ def _raise_not_in_cache_func(func_name):
         )
 
     return raise_exception
+
+
+def _get_func_code(func):
+    if hasattr(func, "__wrapped_async_gen__"):
+        return get_func_code(func.__wrapped_async_gen__)
+    return get_func_code(func)
+
+
+mock.patch("joblib.memory.get_func_code", _get_func_code).start()
 
 
 def create(func, *, modules=None, ignore_args=None):
