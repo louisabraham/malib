@@ -3,6 +3,37 @@
 A few utilities that I find useful.
 
 
+## Cached stubs
+
+Create pytest fixtures to cache the output of functions.
+
+```py
+# in your conftest.py
+
+from os import getenv
+from malib import cached_stubs
+
+from my_module import network_function, a, b
+
+# default values for configuration
+cached_stubs.RECORD = getenv("RECORD") == "1" 
+cached_stubs.PATH = "tests/cached_stubs"
+
+# this patches my_module.network_function by default
+fixture = cached_stubs.create(network_function, ignore_args=["api_key"])
+
+# this will patch other_module.network_function too
+fixture = cached_stubs.create(network_function, modules=["my_module, ""other_module"])
+
+# to combine two fixtures in one
+fixture_a = cached_stubs.create(a)
+fixture_b = cached_stubs.create(b)
+
+@pytest.fixture
+def fixture_ab(fixture_a, fixture_b):
+    pass
+```
+
 ## RateLimiter
 
 ```py
