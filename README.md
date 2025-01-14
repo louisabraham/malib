@@ -5,7 +5,7 @@ A few utilities that I find useful.
 
 ## Cached stubs
 
-Create pytest fixtures to cache the output of functions.
+Create pytest fixtures to cache the output of functions. See the [blog post](https://louisabraham.github.io/articles/cached-stubs) for more details.
 
 ```py
 # in your conftest.py
