@@ -21,6 +21,8 @@ def _patch_generatorfunction(func):
     def wrapper(*args, **kwargs):
         return list(func(*args, **kwargs))
 
+    wrapper.__wrapped_cached_stubs__ = func
+
     return wrapper
 
 
@@ -33,7 +35,7 @@ def _patch_asyncgenfunction(func):
     def wrapper(*args, **kwargs):
         return asyncio.run(_collect_asyncgenerator(func(*args, **kwargs)))
 
-    wrapper.__wrapped_async_gen__ = func
+    wrapper.__wrapped_cached_stubs__ = func
     return wrapper
 
 
@@ -58,9 +60,7 @@ def _raise_not_in_cache_func(func_name):
 
 
 def _get_func_code(func):
-    if hasattr(func, "__wrapped_async_gen__"):
-        return get_func_code(func.__wrapped_async_gen__)
-    return get_func_code(func)
+    return get_func_code(getattr(func, "__wrapped_cached_stubs__", func))
 
 
 mock.patch("joblib.memory.get_func_code", _get_func_code).start()
