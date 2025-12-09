@@ -1,6 +1,7 @@
 import asyncio
 import inspect
 from functools import wraps
+from pathlib import Path
 from importlib import import_module
 from os import getenv
 from unittest import mock
@@ -78,6 +79,7 @@ def create(func, *, modules=None, ignore_args=None):
     if modules is None:
         modules = [func.__module__]
     cached_func = memory.cache(func, ignore=ignore_args)
+    (Path(PATH) / ".gitignore").unlink(missing_ok=True)
     if not RECORD:
         cached_func._call = _raise_not_in_cache_func(func.__qualname__)
     if asyncgen:
