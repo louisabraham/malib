@@ -1,9 +1,9 @@
 import asyncio
 import inspect
 from functools import wraps
-from pathlib import Path
 from importlib import import_module
 from os import getenv
+from pathlib import Path
 from unittest import mock
 
 import joblib
@@ -49,10 +49,14 @@ def _make_asyncgenfunction(func):
     return wrapper
 
 
+def _truncate(s, max_len=200):
+    return s if len(s) <= max_len else s[: max_len - 3] + "..."
+
+
 def _raise_not_in_cache_func(func_name):
     def raise_exception(*args, **kwargs):
-        arg_str = ", ".join(repr(a) for a in args)
-        kwarg_str = ", ".join(f"{k}={v!r}" for k, v in kwargs.items())
+        arg_str = ", ".join(_truncate(repr(a)) for a in args)
+        kwarg_str = ", ".join(f"{k}={_truncate(repr(v))}" for k, v in kwargs.items())
         raise Exception(
             f"Result is not in cache for {func_name}, called with args: ({arg_str}), kwargs: {{{kwarg_str}}}"
         )
